@@ -1,29 +1,62 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
-class User(models.Model):
-    username = models.CharField(max_length=20, primary_key=True)
+class UserManager(BaseUserManager):
+    def create_user(self, username, password=None, **extra_fields):
+        if not username:
+            raise ValueError('The Username must be set')
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(username, password, **extra_fields)
+
+class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
     surname = models.CharField(max_length=20)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['name', 'surname']
+
+class DatabaseManager(User):
     
-class DatabaseManager(models.Model):
-    username = models.Charfield(max_length = 20 , primary_key = True)
-    password = models.CharField(max_length=20)
-    
-    @staticmethod
-    def check_username_exist(username):
-        
-        if DatabaseManager.objects.filter(username = username ).exists():
-            raise ValidationError("Username already exists as a Database Manager")
-    
+    class Meta:
+        verbose_name = 'Database Manager'
+        verbose_name_plural = 'Database Managers'
+
+    def save(self, *args, **kwargs):
+        self.is_staff = True  
+        self.is_superuser = True  
+        super().save(*args, **kwargs)
+
 
 class Player(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     date_of_birth = models.DateField()
     weight = models.FloatField()
     height = models.FloatField()
+
+class Coach(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    nationality = models.CharField(max_length=20)
+
+class Jury(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    nationality = models.CharField(max_length=20)
+
 
 class Position(models.Model):
     position_id = models.AutoField(primary_key=True)
@@ -38,10 +71,6 @@ class PlayerPositios(models.Model):
 class Channel(models.Model):
     channel_id = models.AutoField(primary_key=True)
     channel_name = models.CharField(max_length=20, unique=True)
-
-class Coach(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    nationality = models.CharField(max_length=20)
 
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)
@@ -61,10 +90,6 @@ class PlayerTeams(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     class Meta:
         unique_together = ('team', 'player')
-
-class Jury(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    nationality = models.CharField(max_length=20)
 
 class Stadium(models.Model):
     stadium_id = models.AutoField(primary_key=True)
