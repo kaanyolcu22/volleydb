@@ -44,8 +44,15 @@ def save_user(data, user_type):
                 sql = """INSERT INTO Player (username, password, name, surname, date_of_birth, height, weight)
                          VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 params = (data['username'], data['password'], data['name'], data['surname'], data['date_of_birth'], data['height'], data['weight'])
-            # Add similar blocks for 'Jury' and 'Coach' with appropriate SQL and parameters
-
+            if user_type == 'Coach':
+                sql = """INSERT INTO Coach (username, password, name, surname, nationality)
+                         VALUES (%s, %s, %s, %s, %s)"""
+                params = (data['username'], data['password'], data['name'], data['surname'], data['nationality'])
+            if user_type == 'Jury':
+                sql = """INSERT INTO Jury (username, password, name, surname, nationality)
+                         VALUES (%s, %s, %s, %s, %s)"""
+                params = (data['username'], data['password'], data['name'], data['surname'], data['nationality'])
+            
             cursor.execute(sql, params)
             connection.commit()
             print("Insert successful")
