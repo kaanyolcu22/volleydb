@@ -52,7 +52,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'volleydb.urls'
-AUTH_USER_MODEL = 'volleydb.User'
 
 
 TEMPLATES = [
@@ -79,10 +78,15 @@ WSGI_APPLICATION = 'volleydb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'volleydb',
+        'USER': 'root',
+        'PASSWORD': '1a2w3s4r.kaan',
+        'HOST': 'localhost',  
+        'PORT': '3306',   
     }
 }
+
 
 
 # Password validation

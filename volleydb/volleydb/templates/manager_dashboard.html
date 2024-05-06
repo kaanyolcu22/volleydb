@@ -1,9 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Manager Dashboard</title>
-</head>
-<body>
-    <h1>Welcome to your Manager Dashboard, {{ request.user.username }}!</h1>
-</body>
-</html>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Add Player:</legend>
+        {{ player_form.as_p }}
+        <button type="submit" name="add_player">Add Player</button>
+    </fieldset>
+</form>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Add Jury:</legend>
+        {{ jury_form.as_p }}
+        <button type="submit" name="add_jury">Add Jury</button>
+    </fieldset>
+</form>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Add Coach:</legend>
+        {{ coach_form.as_p }}
+        <button type="submit" name="add_coach">Add Coach</button>
+    </fieldset>
+</form>

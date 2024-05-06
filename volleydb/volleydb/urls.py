@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import user_login, manager_dashboard, user_dashboard
+from .views import login_view , manager_dashboard, user_dashboard
 from .views import home 
 
 urlpatterns = [
     path('', home, name='home'),
-    path('login/', user_login, name='user_login'),
-    path('dashboard/manager/', manager_dashboard, name='manager_dashboard'),
-    path('dashboard/user/', user_dashboard, name='user_dashboard'),
+    path('login/', login_view, name='user_login'),
+    path('manager_dashboard/', manager_dashboard, name='manager_dashboard'),
+    path('user_dashboard/', user_dashboard, name='user_dashboard'),
 ]

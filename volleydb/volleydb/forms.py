@@ -1,13 +1,25 @@
 from django import forms
-from .models import User, Player
+from django import forms
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'password', 'name', 'surname'] 
+class PlayerForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
+    name = forms.CharField(max_length=100)
+    surname = forms.CharField(max_length=100)
+    date_of_birth = forms.DateField()
+    height = forms.IntegerField()
+    weight = forms.IntegerField()
 
-class PlayerForm(forms.ModelForm):
-    class Meta:
-        model = Player
-        fields = ['date_of_birth', 'weight', 'height']
+class JuryForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
+    name = forms.CharField(max_length=100)
+    surname = forms.CharField(max_length=100)
+    nationality = forms.CharField(max_length=50)
 
+class CoachForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
+    name = forms.CharField(max_length=100)
+    surname = forms.CharField(max_length=100)
+    nationality = forms.CharField(max_length=50)
