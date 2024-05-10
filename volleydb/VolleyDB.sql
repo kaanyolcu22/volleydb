@@ -4,9 +4,9 @@ USE VolleyDB;
 
 CREATE TABLE DBManager(
     username	VARCHAR(512),
-    password	VARCHAR(512)
+    password	VARCHAR(512),
     PRIMARY KEY (username)
-)
+);
 
 CREATE TABLE Player 
 (
@@ -77,7 +77,7 @@ CREATE TABLE Jury
 
 CREATE TABLE MatchSession 
 (
-    session_ID	INT,
+	session_ID INT,
     team_ID	INT,
     stadium_ID	INT,
     stadium_name	VARCHAR(512),
@@ -98,9 +98,21 @@ CREATE TABLE SessionSquads
     PRIMARY KEY (squad_ID)
 );
 
-INSERT INTO DBManager (username,password) VALUES ('Kevin','Kevin')
-INSERT INTO DBManager (username,password) VALUES ('Bob','Bob')
-INSERT INTO DBManager (username,password) VALUES ('sorunlubirarkadas','muvaffakiyetsizleştiricileştiriveremeyebileceklerimizdenmişsinizcesine')
+CREATE TABLE Stadium(
+	stadium_id INT,
+    stadium_name	VARCHAR(512),
+    stadium_country	VARCHAR(512),
+    PRIMARY KEY (stadium_ID)
+    
+);
+
+DELIMITER $$
+
+
+
+INSERT INTO DBManager (username,password) VALUES ('Kevin','Kevin');
+INSERT INTO DBManager (username,password) VALUES ('Bob','Bob');
+INSERT INTO DBManager (username,password) VALUES ('sorunlubirarkadas','muvaffakiyetsizleştiricileştiriveremeyebileceklerimizdenmişsinizcesine');
 INSERT INTO SessionSquads (squad_ID, session_ID, played_player_username, position_ID) VALUES ('1', '0', 'g_orge', '0');
 INSERT INTO SessionSquads (squad_ID, session_ID, played_player_username, position_ID) VALUES ('2', '0', 'c_ozbay', '1');
 INSERT INTO SessionSquads (squad_ID, session_ID, played_player_username, position_ID) VALUES ('3', '0', 'm_vargas', '2');
@@ -162,6 +174,9 @@ INSERT INTO Jury (username, password, name, surname, nationality) VALUES ('o_ozc
 INSERT INTO Jury (username, password, name, surname, nationality) VALUES ('m_sevinc', 'mehmet.0457', 'Mehmet', 'Sevinç', 'TR');
 INSERT INTO Jury (username, password, name, surname, nationality) VALUES ('e_sener', 'ertem.4587', 'Ertem', 'Şener', 'TR');
 INSERT INTO Jury (username, password, name, surname, nationality) VALUES ('s_engin', 'sinan.6893', 'Sinan', 'Engin', 'TR');
+INSERT INTO Stadium (stadium_ID, stadium_name, stadium_country) VALUES ('0', 'Burhan Felek Voleybol Salonu', 'TR');
+INSERT INTO Stadium (stadium_ID, stadium_name, stadium_country) VALUES ('1', 'GD Voleybol Arena', 'TR');
+INSERT INTO Stadium (stadium_ID, stadium_name, stadium_country) VALUES ('2', 'Copper Box Arena', 'UK');
 INSERT INTO Position (position_ID, position_name) VALUES ('0', 'Libero');
 INSERT INTO Position (position_ID, position_name) VALUES ('1', 'Setter');
 INSERT INTO Position (position_ID, position_name) VALUES ('2', 'Opposite hitter');

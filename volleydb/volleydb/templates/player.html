@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Sessions</title>
+</head>
+<body>
+    <h1>Players You've Played With</h1>
+    {% if played_with %}
+        {% for player in played_with %}
+            <p>{{ player.name }} {{ player.surname }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No sessions found.</p>
+    {% endif %}
+    {% if avg_height %}
+        <h2>Average Height of Most Played With: {{ avg_height|floatformat:"2" }} cm</h2>
+    {% endif %}
+    {% if error %}
+        <p>Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>

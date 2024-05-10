@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jury Dashboard</title>
+</head>
+<body>
+    <h1>Jury Dashboard</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <p>Username: {{ username }}</p>
+    <p>Average Rating: {{ average_rating }}</p>
+    <p>Total Rated Sessions: {{ total_sessions }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Rate a Session</legend>
+            <label for="session_id">Session ID:</label>
+            <input type="number" id="session_id" name="session_id" required>
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" step="0.1" required>
+            <button type="submit">Submit Rating</button>
+        </fieldset>
+    </form>
+</body>
+</html>
