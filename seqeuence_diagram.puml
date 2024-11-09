@@ -1,0 +1,37 @@
+@startuml
+
+actor User
+participant Main
+participant "Push Button" as Button
+participant "Timer (TIM5, TIM6, TIM7)" as Timer
+participant LED
+
+User -> Main: Starts Main Loop
+loop while (1)
+    Main -> Button: handle_button_press()
+    alt Button Pressed
+        Main -> Timer: reset_timer(TIM5, delay = 2000ms)
+        Main -> Timer: reset_timer(TIM6, delay = 3000ms)
+        Main -> Timer: reset_timer(TIM7, delay = 4000ms)
+    end
+
+    alt TIM5 Timeout and LED On Condition
+        Timer -> LED: turn_on_led()
+    else TIM5 Timeout but LED Off Condition
+        Timer -> LED: turn_off_led()
+    end
+    
+    alt TIM6 Timeout and LED On Condition
+        Timer -> LED: turn_on_led()
+    else TIM6 Timeout but LED Off Condition
+        Timer -> LED: turn_off_led()
+    end
+    
+    alt TIM7 Timeout and LED On Condition
+        Timer -> LED: turn_on_led()
+    else TIM7 Timeout but LED Off Condition
+        Timer -> LED: turn_off_led()
+    end
+end
+
+@enduml
